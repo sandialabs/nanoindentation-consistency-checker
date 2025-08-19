@@ -41,7 +41,7 @@ def argparse_verify_anomaly_type(anomaly_type: str, include_all=False):
 
 
 def get_datapath_from_config():
-    config_file_path = os.path.join(os.path.dirname(__file__), 'config.py')
+    config_file_path = os.path.join(os.path.dirname(__file__), "config.py")
     spec = importlib.util.spec_from_file_location("config", config_file_path)
     config = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(config)
@@ -65,17 +65,17 @@ def build_parser():
     subparsers = parser.add_subparsers(title="commands", dest="command")
 
     subparser_reverify = subparsers.add_parser(
-        'reverify-labels', description="Create a csv for an anomaly type."
+        "reverify-labels", description="Create a csv for an anomaly type."
     )
     subparser_reverify.add_argument(
-        '--anomaly',
+        "--anomaly",
         type=lambda x: argparse_verify_anomaly_type(x, False),
         default=None,
         required=True,
         help="Anomaly type for which to create a reverification csv.",
     )
     subparser_reverify.add_argument(
-        '--datapath',
+        "--datapath",
         type=argparse_verify_datapath,
         default=None,
         required=False,
@@ -85,19 +85,19 @@ def build_parser():
     )
 
     subparser_images = subparsers.add_parser(
-        'generate-images',
+        "generate-images",
         description="Generate images for all indents and specific anomaly types.",
     )
     subparser_images.add_argument(
-        '--anomaly',
+        "--anomaly",
         type=lambda x: argparse_verify_anomaly_type(x, True),
-        default='all',
+        default="all",
         help="Select `all` to images for all indents or select a specific anomaly type. "
         "This relies on the existence of the `results/{anomaly_type}_test_labels.csv` file. "
         "Default is `all`.",
     )
     subparser_images.add_argument(
-        '--datapath',
+        "--datapath",
         type=argparse_verify_datapath,
         default=None,
         required=False,
@@ -107,13 +107,13 @@ def build_parser():
     )
 
     subparser_gui = subparsers.add_parser(
-        'activate-gui',
+        "activate-gui",
         description="View and interact with reverification labels from an anomaly type. "
         "The `reverify-labels` and `generate-images` commands must be completed "
         "in order for this command to work.",
     )
     subparser_gui.add_argument(
-        '--anomaly',
+        "--anomaly",
         type=lambda x: argparse_verify_anomaly_type(x, False),
         default=None,
         required=True,
@@ -128,9 +128,9 @@ def runner():
     arguments = parser.parse_args()
 
     # Get datapath from config.py if not provided in command line
-    if hasattr(arguments, 'datapath') and arguments.datapath is None:
+    if hasattr(arguments, "datapath") and arguments.datapath is None:
         datapath = get_datapath_from_config()
-        if datapath == '':
+        if datapath == "":
             parser.error(
                 "Datapath must be provided either in the command "
                 f"line or in main/config.py for the '{arguments.command}' command "

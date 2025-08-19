@@ -10,7 +10,7 @@
 # -----------------------------------------------
 # Users may opt to set their full data path in
 # this file rather than pass via the command line
-USER_DATAPATH = '~/Documents/ml-benchmark/local-data/'
+USER_DATAPATH = "~/Documents/ml-benchmark/local-data/"
 
 # -----------------------------------------------
 # Default values - to be adjusted as necessary
