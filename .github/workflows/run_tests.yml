@@ -1,0 +1,79 @@
+name: Main Test Driver
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
+  workflow_dispatch:
+    inputs:
+      git-ref:
+        description: Git Hash (Optional)
+        required: false
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash -l {0}
+
+jobs:
+  lint:
+    name: lint/style-and-typos
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout source
+      uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    - name: Black Formatting Check
+      run: |
+        pip install black
+        black . --check --diff
+    - name: Spell Check
+      uses: crate-ci/typos@master
+    - name: URL Checker
+      uses: urlstechie/urlchecker-action@0.0.34
+      with:
+        # A comma-separated list of file types to cover in the URL checks
+        file_types: .md,..py
+        # Choose whether to include file with no URLs in the prints.
+        print_all: false
+        # More verbose summary at the end of a run
+        verbose: true
+        # How many times to retry a failed request (defaults to 1)
+        retry_count: 3
+  test:
+    name: run-tests
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, macos-latest, ubuntu-latest]
+        python: ['3.10', '3.11', '3.12', '3.13']
+    steps:
+    - name: Checkout source
+      uses: actions/checkout@v4
+    - name: Set up Python ${{ matrix.python }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python }}
+    - name: Install package
+      run: |
+        echo ""
+        echo "Install package..."
+        echo ""
+        pip install -e .
+    - name: Run tests
+      run: |
+        pytest -v -rs .

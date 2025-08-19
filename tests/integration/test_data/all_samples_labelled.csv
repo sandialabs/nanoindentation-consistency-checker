@@ -1,0 +1,9 @@
+sample_num,indent_num,outlier,sample_1_anomaly,fully_anomalous_sample,path
+1,1,False,True,False,indent_1_1.csv
+1,2,False,True,False,indent_1_2.csv
+2,1,False,False,False,indent_2_1.csv
+2,2,True,False,False,indent_2_2.csv
+3,1,True,False,False,indent_3_1.csv
+3,2,True,False,False,indent_3_2.csv
+4,1,False,False,True,indent_4_1.csv
+4,2,False,False,True,indent_4_2.csv

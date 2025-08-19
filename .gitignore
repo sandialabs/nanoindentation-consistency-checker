@@ -1,0 +1,8 @@
+*.pyc
+*__pycache__*
+*.egg-info
+
+code/reverification/data/
+code/reverification/results/
+code/reverification/images/
+code/reverification/new_labels/
