@@ -172,6 +172,6 @@ program is ran to ensure accidental changes or quitting the program can be saved
     ├── images/                         # Generated folder for indent visualization
     ├── main/                           # Folder with the main user scripts
     ├── new_labels/                     # Generated folder for user selected new labels based on detected inconsistencies
-    ├── results/]                       # Generated folder for identified inconsistencies
+    ├── results/                        # Generated folder for identified inconsistencies
     ├── utils/                          # Utility functions
     └── README.md
